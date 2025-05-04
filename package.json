@@ -1,0 +1,36 @@
+{
+  "name": "expressbudgetserver",
+  "version": "1.0.0",
+  "description": "A server to run for a budgetapp for flutter",
+  "keywords": [
+    "JavaScript",
+    "Express",
+    "Json",
+    "API",
+    "Routes",
+    "Moongose",
+    "MySQL"
+  ],
+  "homepage": "https://github.com/Colin-Stark/expressBudgetServer#readme",
+  "bugs": {
+    "url": "https://github.com/Colin-Stark/expressBudgetServer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Colin-Stark/expressBudgetServer.git"
+  },
+  "license": "ISC",
+  "author": "COLLINS OLOKPEDJE",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.14.1"
+  }
+}
