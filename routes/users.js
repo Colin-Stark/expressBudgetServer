@@ -49,9 +49,7 @@ router.post('/login', async (req, res) => {
 
         if (!user) {
             return res.status(401).json({ success: false, message: 'Invalid credentials' });
-        }
-
-        // Check if password matches
+        }        // Check if password matches
         const isMatch = await user.authenticate(password);
 
         if (!isMatch) {
@@ -79,7 +77,21 @@ router.post('/login', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const users = await User.find().select('-password');
-        res.status(200).json({ success: true, count: users.length, data: users });
+
+        // Map users to include __v field and ensure it's a non-negative integer
+        const formattedUsers = users.map(user => ({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            createdAt: user.createdAt,
+            __v: user.__v || 0 // Ensure __v exists and is at least 0
+        }));
+
+        res.status(200).json({
+            success: true,
+            count: formattedUsers.length,
+            data: formattedUsers
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: 'Server error' });

@@ -28,7 +28,7 @@ app.use('/api/savings', savingsRoutes);
 
 // Root route
 app.get('/', (req, res) => {
-    res.send('Budget API is running');
+    res.status(200).json({ message: 'Budget API is running' });
 });
 
 const PORT = process.env.PORT || 5000;
