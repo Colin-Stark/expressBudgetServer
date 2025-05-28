@@ -1,64 +1,44 @@
-name: Express Budget Server CI
+﻿name: Express Budget Server CI
 
 on:
   push:
-    branches: [ main, master, dev ]
+    branches: [main, master, dev]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
-        node-version: [22.x]        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        
+        node-version: [22.x] # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-          
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-          
+
+      - name: Run linting
+        run: npm run lint
+
       - name: Run tests
         run: npm test
         env:
           CI: true
           # Add any environment variables your tests need here
           MONGO_URI: ${{ secrets.MONGO_URI }}
-          
+
       - name: Upload test coverage reports
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report-node-${{ matrix.node-version }}
           path: coverage/
-          
-  lint:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.x'
-          cache: 'npm'
-          
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Install ESLint
-        run: npm install eslint --no-save
-        
-      - name: Run ESLint
-        run: npx eslint . --ext .js
-        continue-on-error: true  # Make linting a non-blocking step

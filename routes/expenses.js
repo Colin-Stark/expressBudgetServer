@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
 // @access  Public (would be Private in real app)
 router.get('/', async (req, res) => {
     try {
-        let query = {};
+        const query = {};
 
         // Filter by budget if budgetId is provided
         if (req.query.budgetId) {
