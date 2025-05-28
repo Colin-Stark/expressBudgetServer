@@ -3,15 +3,21 @@ const js = require("@eslint/js");
 const prettierConfig = require("eslint-config-prettier");
 
 module.exports = defineConfig([
-    // Use the recommended JS configuration as a base
-    js.configs.recommended,    // Basic ESLint configuration
+    // Specify files to ignore - this should be a separate config object with only ignores property
     {
         ignores: [
-            "node_modules/**",
-            "coverage/**",
-            ".env",
-            ".env.*"
-        ],
+            "**/node_modules/**",
+            "**/coverage/**",
+            "**/.env",
+            "**/.env.*"
+        ]
+    },
+
+    // Use the recommended JS configuration as a base
+    js.configs.recommended,
+
+    // Basic ESLint configuration
+    {
         languageOptions: {
             ecmaVersion: 2022,
             sourceType: "commonjs",
