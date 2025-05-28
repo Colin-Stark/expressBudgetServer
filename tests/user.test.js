@@ -18,9 +18,6 @@ beforeAll(async () => {
     // Connect to your existing MongoDB instance
     // Use a dedicated test database if possible to avoid affecting your dev/prod data
     const mongoURI = process.env.MONGO_URI;
-    console.log('Attempting to connect to MongoDB with URI starting with:',
-        mongoURI ? mongoURI.substring(0, 15) + '...' : 'undefined');
-
     try {
         await mongoose.connect(mongoURI);
         console.log('Connected to MongoDB for testing');
