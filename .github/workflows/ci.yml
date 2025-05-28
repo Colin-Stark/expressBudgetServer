@@ -26,14 +26,22 @@ jobs:
           cache: 'npm'
           
       - name: Install dependencies
-        run: npm ci
-        
+        run: npm ci      - name: Check MongoDB URI (safely)
+        run: |
+          if [ -n "$MONGO_URI" ]; then
+            echo "MongoDB URI is set and starts with: $(echo $MONGO_URI | cut -c1-15)..."
+          else
+            echo "MongoDB URI is not set!"
+          fi
+        env:
+          MONGO_URI: ${{ secrets.MONGODB_URI_TEST }}
+          
       - name: Run tests
         run: npm test
         env:
           CI: true
           # Add any environment variables your tests need here
-          MONGODB_URI: ${{ secrets.MONGODB_URI_TEST }}
+          MONGO_URI: ${{ secrets.MONGODB_URI_TEST }}
           
       - name: Upload test coverage reports
         uses: actions/upload-artifact@v4

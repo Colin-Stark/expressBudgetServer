@@ -5,5 +5,5 @@ module.exports = {
     coverageDirectory: 'coverage',
     verbose: true,
     // Increase the timeout for tests to allow for database operations
-    testTimeout: 30000
+    testTimeout: 60000
 };
