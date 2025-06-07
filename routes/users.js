@@ -101,6 +101,7 @@ router.get('/', async (req, res) => {
 // @desc    Get user by email
 // @route   GET /api/users/email/:email
 // @access  Public
+// Example usage: GET /api/users/email/collinscodes@gmail.com
 router.get('/email/:email', async (req, res) => {
     try {
         const { email } = req.params;
