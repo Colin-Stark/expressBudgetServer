@@ -98,4 +98,34 @@ router.get('/', async (req, res) => {
     }
 });
 
+// @desc    Get user by email
+// @route   GET /api/users/email/:email
+// @access  Public
+router.get('/email/:email', async (req, res) => {
+    try {
+        const { email } = req.params;
+
+        const user = await User.findOne({ email }).select('-password');
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                createdAt: user.createdAt,
+                __v: user.__v || 0
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
+
+
 module.exports = router;
